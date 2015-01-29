@@ -1,3 +1,5 @@
+# Class kerberos::client
+
 class kerberos::client (
   $realm,
   $kdcs,
