@@ -8,7 +8,13 @@ class kerberos::client (
 
   include ntp
 
-  package { 'krb5-user':
+  if ($::osfamily == 'RedHat') {
+    $kerberos_client = 'krb5-workstation'
+  } else {
+    $kerberos_client = 'krb5-user'
+  }
+
+  package { $kerberos_client:
     ensure  => present,
     require => File['/etc/krb5.conf'],
   }
