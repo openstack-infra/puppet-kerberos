@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+2: Spencer Krum <nibz@spencerkrum.com>
+Workflow+1: Spencer Krum <nibz@spencerkrum.com>
+Code-Review+2: Elizabeth K. Joseph <lyz@princessleia.com>
+Submitted-by: Jenkins
+Submitted-at: Thu, 02 Jul 2015 23:51:04 +0000
+Reviewed-on: https://review.openstack.org/196460
+Project: openstack-infra/puppet-kerberos
+Branch: refs/heads/master
