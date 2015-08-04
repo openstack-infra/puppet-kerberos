@@ -8,12 +8,12 @@ class kerberos::server (
   $slave = false,
 ) {
 
-  include haveged
+  include ::haveged
 
-  class { 'kerberos::client':
-    realm          => $realm,
-    kdcs           => $kdcs,
-    admin_server   => $admin_server,
+  class { '::kerberos::client':
+    realm        => $realm,
+    kdcs         => $kdcs,
+    admin_server => $admin_server,
   }
 
   $packages = [

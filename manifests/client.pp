@@ -6,7 +6,7 @@ class kerberos::client (
   $admin_server,
 ) {
 
-  include ntp
+  include ::ntp
 
   if ($::osfamily == 'RedHat') {
     $kerberos_client = 'krb5-workstation'
