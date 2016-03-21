@@ -1,9 +1,9 @@
 # Class kerberos::client
 
 class kerberos::client (
-  $realm,
-  $kdcs,
   $admin_server,
+  $kdcs,
+  $realm,
 ) {
 
   include ::ntp

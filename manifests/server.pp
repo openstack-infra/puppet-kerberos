@@ -2,10 +2,10 @@
 
 class kerberos::server (
   $realm,
-  $kdcs = [$::fqdn],
   $admin_server = [$::fdqn],
-  $slaves = [],
-  $slave = false,
+  $kdcs         = [$::fqdn],
+  $slave        = false,
+  $slaves       = [],
 ) {
 
   include ::haveged
