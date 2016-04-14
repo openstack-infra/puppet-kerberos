@@ -10,12 +10,6 @@ class kerberos::server (
 
   include ::haveged
 
-  class { '::kerberos::client':
-    realm        => $realm,
-    kdcs         => $kdcs,
-    admin_server => $admin_server,
-  }
-
   $packages = [
     'krb5-admin-server',
     'krb5-kdc',
