@@ -1,0 +1,10 @@
+Code-Review+1: Ricardo Carrillo Cruz <ricardo.carrillo.cruz@gmail.com>
+Code-Review+2: yolanda.robla <yroblamo@redhat.com>
+Code-Review+2: Spencer Krum <nibz@spencerkrum.com>
+Workflow+1: Spencer Krum <nibz@spencerkrum.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 16 Jun 2016 16:53:07 +0000
+Reviewed-on: https://review.openstack.org/305968
+Project: openstack-infra/puppet-kerberos
+Branch: refs/heads/master
