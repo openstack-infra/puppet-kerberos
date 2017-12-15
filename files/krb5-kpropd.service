@@ -1,0 +1,14 @@
+[Unit]
+Description=Kerberos 5 slave KDC update server
+
+[Service]
+ExecReload=/bin/kill -HUP $MAINPID
+EnvironmentFile=-/etc/default/krb5-kpropd
+ExecStart=/usr/sbin/kpropd -D $DAEMON_ARGS
+InaccessibleDirectories=/etc/ssh /etc/ssl/private  /root
+ReadOnlyDirectories=/
+ReadWriteDirectories=/var/tmp /tmp /var/lib/krb5kdc /var/run /run
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

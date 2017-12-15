@@ -87,12 +87,41 @@ class kerberos::server (
     environment => 'PATH=/usr/bin:/bin:/usr/sbin:/sbin',
   }
 
-  service { 'krb5-kpropd':
-    ensure  => $run_kpropd,
-    require => [
-      File['/etc/init.d/krb5-kpropd'],
-      Package['krb5-admin-server'],
-    ],
+  if ($::operatingsystem == 'Ubuntu') and ($::operatingsystemrelease >= '16.04') {
+    file { '/etc/systemd/system/krb5-kpropd.service':
+      ensure  => present,
+      replace => true,
+      source  => 'puppet:///modules/kerberos/krb5-kpropd.service',
+      require => Package['krb5-admin-server'],
+    }
+    service { 'krb5-kpropd':
+      ensure  => $run_kpropd,
+      require => [
+        File['/etc/systemd/system/krb5-kpropd.service'],
+      ],
+    }
+    # This is a hack to make sure that systemd is aware of the new service
+    # before we attempt to start it.
+    exec { "krb5-kpropd-systemd-daemon-reload":
+      command     => '/bin/systemctl daemon-reload',
+      before      => Service['krb5-kpropd'],
+      subscribe   => File['/etc/systemd/system/krb5-kpropd.service'],
+      refreshonly => true,
+    }
+  } else {
+    file { '/etc/init.d/krb5-kpropd':
+      ensure  => present,
+      replace => true,
+      source  => 'puppet:///modules/kerberos/krb5-kpropd',
+      require => Package['krb5-admin-server'],
+    }
+
+    service { 'krb5-kpropd':
+      ensure  => $run_kpropd,
+      require => [
+        File['/etc/init.d/krb5-kpropd'],
+      ],
+    }
   }
 
   service { 'krb5-admin-server':
