@@ -2,7 +2,7 @@
 
 class kerberos::server (
   $realm,
-  $admin_server = [$::fdqn],
+  $admin_server = [$::fqdn],
   $kdcs         = [$::fqdn],
   $slave        = false,
   $slaves       = [],
