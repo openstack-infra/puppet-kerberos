@@ -63,15 +63,6 @@ class kerberos::server (
     $kprop_cron = present
   }
 
-  # krb5-admin-server generates this, so make sure this runs after we do
-  # things with krb5-admin-server
-  file { '/etc/default/krb5-admin-server':
-    ensure  => present,
-    replace => true,
-    content => template('kerberos/krb5-admin-server.defaults.erb'),
-    require => Package['krb5-admin-server'],
-  }
-
   cron { 'kprop':
     ensure      => $kprop_cron,
     user        => 'root',
@@ -81,6 +72,15 @@ class kerberos::server (
   }
 
   if ($::operatingsystem == 'Ubuntu') and ($::operatingsystemrelease >= '16.04') {
+    # krb5-admin-server generates this, so make sure this runs after we do
+    # things with krb5-admin-server
+    file { '/etc/default/krb5-admin-server':
+      ensure  => present,
+      replace => true,
+      content => template('kerberos/krb5-admin-server.defaults.new.erb'),
+      require => Package['krb5-admin-server'],
+    }
+
     file { '/etc/systemd/system/krb5-kpropd.service':
       ensure  => present,
       replace => true,
@@ -102,6 +102,15 @@ class kerberos::server (
       refreshonly => true,
     }
   } else {
+    # krb5-admin-server generates this, so make sure this runs after we do
+    # things with krb5-admin-server
+    file { '/etc/default/krb5-admin-server':
+      ensure  => present,
+      replace => true,
+      content => template('kerberos/krb5-admin-server.defaults.erb'),
+      require => Package['krb5-admin-server'],
+    }
+
     file { '/etc/init.d/krb5-kpropd':
       ensure  => present,
       replace => true,
@@ -119,6 +128,7 @@ class kerberos::server (
 
   service { 'krb5-admin-server':
     ensure    => $run_admin_server,
+    enable    => $run_kadmind,
     subscribe => File['/etc/krb5kdc/kadm5.acl'],
     require   => [
       File['/etc/krb5kdc/kadm5.acl'],

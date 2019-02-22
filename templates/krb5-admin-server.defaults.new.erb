@@ -1,0 +1,10 @@
+# Managed by puppet
+# Don't set anything here.
+# We don't set RUN_KADMIND because newer debuntu packaging
+# postinst scripts are broken if RUN_KADMIND is set to false.
+# Long story short they try to set a debconf value based on
+# that value and there is no associated template with that
+# key/question so things break.
+#
+# Instead we manage whether or not slave nodes run kadmind
+# via the init system (via the puppet service resource).
