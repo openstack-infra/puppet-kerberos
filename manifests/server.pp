@@ -52,14 +52,12 @@ class kerberos::server (
   }
 
   if ($slave) {
-    $run_admin_server = stopped
-    $run_kadmind = false
-    $run_kpropd = running
+    $run_kadmind = false  # Synonym for stopped
+    $run_kpropd = true
     $kprop_cron = absent
   } else {
-    $run_admin_server = running
-    $run_kadmind = true
-    $run_kpropd = stopped
+    $run_kadmind = true  # Synonym for running
+    $run_kpropd = false
     $kprop_cron = present
   }
 
@@ -89,6 +87,7 @@ class kerberos::server (
     }
     service { 'krb5-kpropd':
       ensure  => $run_kpropd,
+      enable  => $run_kpropd,
       require => [
         File['/etc/systemd/system/krb5-kpropd.service'],
       ],
@@ -120,6 +119,7 @@ class kerberos::server (
 
     service { 'krb5-kpropd':
       ensure  => $run_kpropd,
+      enable  => $run_kpropd,
       require => [
         File['/etc/init.d/krb5-kpropd'],
       ],
@@ -127,7 +127,7 @@ class kerberos::server (
   }
 
   service { 'krb5-admin-server':
-    ensure    => $run_admin_server,
+    ensure    => $run_kadmind,
     enable    => $run_kadmind,
     subscribe => File['/etc/krb5kdc/kadm5.acl'],
     require   => [
