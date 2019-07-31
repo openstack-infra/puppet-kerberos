@@ -1,5 +1,3 @@
-# OpenStack Kerberos Module
+# This repo has moved to OpenDev
 
-## Overview
-
-Kerberos configuration.
+It can now be found at [https://opendev.org/opendev/puppet-kerberos](https://opendev.org/opendev/puppet-kerberos)
